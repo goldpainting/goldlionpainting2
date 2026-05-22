@@ -184,6 +184,37 @@ export const servicePageImages = {
     '/ellenton/kitchen-cabinet-refinishing-ellenton.jpg',
     '/LakewoodRanch/kitchen-cabinet-painting-lakewood-ranch.jpg',
   ],
+  drywall: [
+    '/parrish/Interior-painting-ceiling-painters.jpg',
+    '/services/house-interior-painting-manatee-county.jpg',
+    '/services/wall-painting-manatee-county.jpg',
+    '/services/professional-interior-painting.jpg',
+    '/sarasota/interior-sarasota-techo.jpeg',
+    '/venice/preparation.jpeg',
+  ],
+  popcorn: [
+    '/parrish/Interior-painting-ceiling-painters.jpg',
+    '/sarasota/interior-sarasota-techo.jpeg',
+    '/services/house-interior-painting-manatee-county.jpg',
+    '/services/residential-interior-painting-manatee-county.jpg',
+    '/venice/setup-interior-venice.jpeg',
+  ],
+  pressure: [
+    '/services/home-exterior-painting-manatee-county.jpg.jpg',
+    '/services/exterior-painting-manatee-county.jpg',
+    '/services/house-exterior-painting-manatee-county.jpg',
+    '/sarasota/preparation-sarasota.jpeg',
+    '/venice/preparation.jpeg',
+    '/siesta/preparation-siesta-7.jpeg',
+  ],
+  stucco: [
+    '/parrish/stucco-repair-parrish.jpg',
+    '/LakewoodRanch/stucco-repair-lakewood-ranch.jpg',
+    '/LakewoodRanch/stucco-painting-lakewood-ranch.jpg',
+    '/palmeto/stucco-painting-palmetto.jpg',
+    '/services/exterior-painting-manatee-county.jpg',
+    '/services/house-exterior-painting-manatee-county.jpg',
+  ],
 } satisfies Record<string, string[]>;
 
 export function buildPageImages(images: string[], pageLabel: string) {

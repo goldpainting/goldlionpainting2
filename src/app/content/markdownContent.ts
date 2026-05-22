@@ -37,7 +37,6 @@ const ignoredLines = new Set([
   "H3",
   "Subheadline",
   "Texto corto",
-  "---",
 ]);
 
 function isMetaLine(line: string) {
@@ -50,6 +49,17 @@ function isMetaLine(line: string) {
 
 function cleanLine(line: string) {
   return line.trim().replace(/\s+/g, " ");
+}
+
+function parseHashHeading(line: string) {
+  const match = line.match(/^(#{1,3})\s+(.+)$/);
+
+  if (!match) return null;
+
+  return {
+    level: match[1].length as 1 | 2 | 3,
+    text: match[2] ?? "",
+  };
 }
 
 function isListItem(line: string) {
@@ -77,11 +87,34 @@ export function readMarkdownContent(relativePath: string) {
 export function parseMarkdownContent(raw: string): MarkdownBlock[] {
   const blocks: MarkdownBlock[] = [];
   let pendingHeading: 1 | 2 | 3 | null = null;
+  let nextPlainHeading: 1 | 2 | null = 1;
 
   for (const originalLine of raw.split(/\r?\n/)) {
     const line = cleanLine(originalLine);
 
     if (!line || ignoredLines.has(line) || isMetaLine(line)) {
+      continue;
+    }
+
+    if (line === "---") {
+      nextPlainHeading = blocks.some(
+        (block) => block.type === "heading" && block.level === 1,
+      )
+        ? 2
+        : 1;
+      pendingHeading = null;
+      continue;
+    }
+
+    const hashHeading = parseHashHeading(line);
+    if (hashHeading) {
+      blocks.push({
+        type: "heading",
+        level: hashHeading.level,
+        text: hashHeading.text,
+      });
+      nextPlainHeading = null;
+      pendingHeading = null;
       continue;
     }
 
@@ -92,6 +125,7 @@ export function parseMarkdownContent(raw: string): MarkdownBlock[] {
         level: Number(inlineHeading[1]) as 1 | 2 | 3,
         text: inlineHeading[2] ?? "",
       });
+      nextPlainHeading = null;
       pendingHeading = null;
       continue;
     }
@@ -108,7 +142,18 @@ export function parseMarkdownContent(raw: string): MarkdownBlock[] {
         level: pendingHeading,
         text: line,
       });
+      nextPlainHeading = null;
       pendingHeading = null;
+      continue;
+    }
+
+    if (nextPlainHeading && !isListItem(line)) {
+      blocks.push({
+        type: "heading",
+        level: nextPlainHeading,
+        text: line,
+      });
+      nextPlainHeading = null;
       continue;
     }
 
@@ -127,7 +172,10 @@ export function parseMarkdownContent(raw: string): MarkdownBlock[] {
 
     blocks.push({
       type:
-        line.startsWith("👉") || line.startsWith("📞") || line.startsWith("📍")
+        line.startsWith("👉") ||
+        line.startsWith("📞") ||
+        line.startsWith("📍") ||
+        /^\[\s*.+\s*\]$/.test(line)
           ? "cta"
           : "paragraph",
       text: line,
@@ -138,11 +186,17 @@ export function parseMarkdownContent(raw: string): MarkdownBlock[] {
 }
 
 export function getMarkdownTitle(raw: string) {
+  const blocks = parseMarkdownContent(raw);
+
   return (
-    parseMarkdownContent(raw).find(
+    blocks.find(
       (block): block is HeadingBlock =>
         isHeadingBlock(block) && block.level === 1,
-    )?.text ?? "Gold Lion Painting Inc"
+    )?.text ??
+    blocks.find((block): block is ParagraphBlock =>
+      isParagraphBlock(block),
+    )?.text ??
+    "Gold Lion Painting Inc"
   );
 }
 
@@ -152,7 +206,7 @@ export function getMarkdownDescription(raw: string) {
     (block) => block.type === "heading" && block.level === 1,
   );
   const description = blocks
-    .slice(firstHeadingIndex + 1)
+    .slice(firstHeadingIndex === -1 ? 1 : firstHeadingIndex + 1)
     .find((block): block is ParagraphBlock => isParagraphBlock(block))?.text;
 
   return (

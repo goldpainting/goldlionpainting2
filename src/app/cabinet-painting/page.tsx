@@ -6,7 +6,7 @@ import {
 } from '../content/markdownContent';
 import { buildPageImages, servicePageImages } from '../content/pageImages';
 
-const raw = readMarkdownContent('doc/infor_services/cabine.md');
+const raw = readMarkdownContent('doc/infor_services/cabinet.md');
 const heroImage = '/home/kitchen-cabinet-painting.jpg';
 const heroAlt = 'Cabinet painting project by Gold Lion Painting Inc';
 

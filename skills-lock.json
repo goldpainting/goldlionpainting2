@@ -1,0 +1,41 @@
+{
+  "version": 1,
+  "skills": {
+    "ai-seo": {
+      "source": "coreyhaines31/marketingskills",
+      "sourceType": "github",
+      "skillPath": "ai-seo/SKILL.md",
+      "computedHash": "a757abe9e8863ee7f4288041982cd30f4efa0b6efade2b8cd0fbd915dff2d928"
+    },
+    "context7-cli": {
+      "source": "upstash/context7",
+      "sourceType": "github",
+      "skillPath": "skills/context7-cli/SKILL.md",
+      "computedHash": "6077b3c638fb7efb31d9b2c815436650de4aef73e7b671edec2f1c63f6a1e105"
+    },
+    "context7-mcp": {
+      "source": "upstash/context7",
+      "sourceType": "github",
+      "skillPath": "skills/context7-mcp/SKILL.md",
+      "computedHash": "6b02383f86f87e81a722b3b6c6d6e06efa5c72f23bc87bb02599e3d499ca2c58"
+    },
+    "nextjs-seo": {
+      "source": "laguagu/claude-code-nextjs-skills",
+      "sourceType": "github",
+      "skillPath": "skills/nextjs-seo/SKILL.md",
+      "computedHash": "a3aee720b800877f09f6cb583b1198cdc0cca5d63657e22134c2bd04cc8a1631"
+    },
+    "programmatic-seo": {
+      "source": "coreyhaines31/marketingskills",
+      "sourceType": "github",
+      "skillPath": "programmatic-seo/SKILL.md",
+      "computedHash": "15cb5979cab5263ede902a830e03342869256ece17905bff240eef498e27cde1"
+    },
+    "seo-audit": {
+      "source": "coreyhaines31/marketingskills",
+      "sourceType": "github",
+      "skillPath": "seo-audit/SKILL.md",
+      "computedHash": "3b03a2e07578e9964acac0b6907ae343a904c6547bfefe779ba326db5eedd1cb"
+    }
+  }
+}

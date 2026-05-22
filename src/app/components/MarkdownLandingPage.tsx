@@ -4,6 +4,7 @@ import { Fragment, type ReactNode } from 'react';
 import {
   FaArrowRight,
   FaCheckCircle,
+  FaChevronRight,
   FaPaintRoller,
 } from 'react-icons/fa';
 
@@ -47,20 +48,23 @@ function getHeroAndContent(blocks: MarkdownBlock[]) {
   const h1Index = blocks.findIndex(
     (block) => block.type === 'heading' && block.level === 1
   );
+  const effectiveH1Index = h1Index === -1 ? 0 : h1Index;
   const firstH2Index = blocks.findIndex(
     (block, index) =>
-      index > h1Index && block.type === 'heading' && block.level === 2
+      index > effectiveH1Index && block.type === 'heading' && block.level === 2
   );
 
-  const titleBlock = blocks[h1Index];
+  const titleBlock = blocks[effectiveH1Index];
   const title =
-    titleBlock?.type === 'heading' ? titleBlock.text : 'Gold Lion Painting Inc';
+    titleBlock?.type === 'heading' || titleBlock?.type === 'paragraph'
+      ? titleBlock.text
+      : 'Gold Lion Painting Inc';
   const heroBlocks = blocks.slice(
-    h1Index + 1,
+    effectiveH1Index + 1,
     firstH2Index === -1 ? undefined : firstH2Index
   );
   const contentBlocks = blocks.slice(
-    firstH2Index === -1 ? h1Index + 1 : firstH2Index
+    firstH2Index === -1 ? effectiveH1Index + 1 : firstH2Index
   );
 
   return { title, heroBlocks, contentBlocks };
@@ -72,6 +76,8 @@ export default function MarkdownLandingPage({
   eyebrow,
   heroImage,
   heroAlt,
+  interlinkTitle,
+  interlinks,
   interlinkType,
   pageImages = [],
 }: MarkdownLandingPageProps) {
@@ -84,7 +90,8 @@ export default function MarkdownLandingPage({
     description,
     canonical,
     image: heroImage,
-    pageType: interlinkType === 'areas' ? 'service' : 'area',
+    pageType:
+      canonical === '/' || interlinkType === 'areas' ? 'service' : 'area',
     label: eyebrow,
   });
   const schemaId = `${eyebrow.toLowerCase().replaceAll(/\s+/g, '-')}-faq-schema`;
@@ -146,6 +153,52 @@ export default function MarkdownLandingPage({
       <GoogleTrustSection />
 
       {renderContentSections(contentBlocks, pageImages)}
+
+      <section className="bg-[#f1f1f1] px-4 py-16 sm:px-6 lg:px-8">
+        <div className="mx-auto max-w-6xl">
+          <div className="scroll-reveal max-w-3xl">
+            <p className="font-display text-sm font-black tracking-[0.16em] text-[#d39620] uppercase">
+              Explore More
+            </p>
+            <h2 className="mt-2 font-heading text-3xl leading-tight font-black text-[#0c0d0e] sm:text-4xl">
+              {interlinkTitle}
+            </h2>
+          </div>
+          <div className="mt-8 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+            {interlinks.map((item, index) => (
+              <Link
+                key={`${item.title}-${item.href}`}
+                href={item.href}
+                className="hover-lift group overflow-hidden rounded-2xl border border-[#e4ad42]/35 bg-[#0c0d0e] shadow-[0_18px_40px_rgba(0,0,0,0.18)]"
+                style={{ animationDelay: `${index * 70}ms` }}
+              >
+                <div className="relative aspect-[16/10]">
+                  <Image
+                    src={item.image}
+                    alt={item.alt}
+                    fill
+                    sizes="(min-width: 1024px) 360px, (min-width: 640px) 50vw, 100vw"
+                    className="object-cover transition duration-500 group-hover:scale-105"
+                  />
+                  <div className="absolute inset-0 bg-linear-to-t from-[#0c0d0e] via-[#0c0d0e]/18 to-transparent" />
+                </div>
+                <div className="p-5">
+                  <h3 className="font-heading text-2xl font-black text-[#e4ad42]">
+                    {item.title}
+                  </h3>
+                  <span className="mt-4 inline-flex items-center gap-2 font-bold text-white transition group-hover:text-[#e4ad42]">
+                    View Page
+                    <FaChevronRight
+                      aria-hidden="true"
+                      className="transition group-hover:translate-x-1"
+                    />
+                  </span>
+                </div>
+              </Link>
+            ))}
+          </div>
+        </div>
+      </section>
 
       <MarkdownFaqAccordion faqs={faqs} />
 

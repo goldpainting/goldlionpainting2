@@ -58,6 +58,10 @@ export function buildLocalBusinessSchema() {
       "Exterior Painting",
       "Cabinet Painting",
       "Cabinet Refinishing",
+      "Pressure Washing",
+      "Stucco Repair",
+      "Drywall Repair",
+      "Popcorn Ceiling Removal",
       "Color Consultation",
     ].map((serviceType) => ({
       "@type": "Offer",
@@ -126,6 +130,10 @@ export function buildLandingPageSchema(input: BuildLandingPageSchemaInput) {
           "Exterior Painting",
           "Cabinet Painting",
           "Cabinet Refinishing",
+          "Pressure Washing",
+          "Stucco Repair",
+          "Drywall Repair",
+          "Popcorn Ceiling Removal",
           "Color Consultation",
         ];
 

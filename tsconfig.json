@@ -46,6 +46,8 @@
     "dist",
     ".vercel",
     "coverage",
+    ".kilo",
+    ".kilo/**",
     ".agents",
     ".github",
     ".agents/**",

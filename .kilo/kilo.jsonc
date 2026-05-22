@@ -1,0 +1,8 @@
+{
+  "$schema": "https://app.kilo.ai/config.json",
+  "model": "kilo/x-ai/grok-code-fast-1:optimized:free",
+  "permission": {
+    "bash": "allow"
+  },
+  "small_model": "kilo/kilo-auto/free"
+}

@@ -80,4 +80,28 @@ export const serviceInterlinkCards = [
     image: '/home/kitchen-cabinet-painting.jpg',
     alt: 'Kitchen cabinet painting project by Gold Lion Painting Inc',
   },
+  {
+    href: '/pressure-washing',
+    title: 'Pressure Washing',
+    image: '/services/home-exterior-painting-manatee-county.jpg.jpg',
+    alt: 'Pressure washing and exterior surface cleaning by Gold Lion Painting Inc',
+  },
+  {
+    href: '/stucco-repair',
+    title: 'Stucco Repair',
+    image: '/parrish/stucco-repair-parrish.jpg',
+    alt: 'Stucco repair and exterior painting by Gold Lion Painting Inc',
+  },
+  {
+    href: '/drywall-repair',
+    title: 'Drywall Repair',
+    image: '/parrish/Interior-painting-ceiling-painters.jpg',
+    alt: 'Drywall repair and ceiling painting by Gold Lion Painting Inc',
+  },
+  {
+    href: '/popcorn-ceiling-removal',
+    title: 'Popcorn Ceiling Removal',
+    image: '/sarasota/interior-sarasota-techo.jpeg',
+    alt: 'Popcorn ceiling removal and smooth ceiling refinishing by Gold Lion Painting Inc',
+  },
 ];

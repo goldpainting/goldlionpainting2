@@ -2,6 +2,10 @@ export const serviceLinks = [
   { href: "/interior-painting", label: "Interior Painting" },
   { href: "/exterior-painting", label: "Exterior Painting" },
   { href: "/cabinet-painting", label: "Cabinet Painting" },
+  { href: "/pressure-washing", label: "Pressure Washing" },
+  { href: "/stucco-repair", label: "Stucco Repair" },
+  { href: "/drywall-repair", label: "Drywall Repair" },
+  { href: "/popcorn-ceiling-removal", label: "Popcorn Ceiling Removal" },
 ];
 
 export const areaLinks = [
