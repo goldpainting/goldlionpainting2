@@ -10,6 +10,21 @@ const config: NextConfig = {
   turbopack: {
     root: projectRoot,
   },
+  experimental: {
+    // Next.js 16.3 turned `useTypeScriptCli` on by default, which makes
+    // `next build` shell out to the `tsc` binary owned by the `typescript`
+    // package. This project aliases `typescript` to
+    // `@typescript/typescript6`, whose binary is named `tsc6`, so the CLI
+    // checker finds no `tsc` there and aborts the build claiming TypeScript
+    // is not installed. Opting out restores the in-process JavaScript
+    // compiler API, which the aliased TypeScript 6 does provide.
+    //
+    // Type checking still runs on TypeScript 7: `node_modules/.bin/tsc`
+    // resolves to `@typescript/native`. The `typescript` package has to stay
+    // on 6 because typescript-eslint needs the JavaScript compiler API that
+    // TypeScript 7 does not expose.
+    useTypeScriptCli: false,
+  },
   async redirects() {
     return [
       {

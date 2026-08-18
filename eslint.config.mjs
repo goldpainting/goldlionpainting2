@@ -6,11 +6,24 @@ import prettierConfig from 'eslint-config-prettier/flat';
 const eslintConfig = defineConfig([
   ...nextVitals,
   ...nextTs,
+  // eslint-plugin-react cannot auto-detect the React version under ESLint 10
+  // (detectReactVersion throws). Pin it explicitly.
+  {
+    settings: {
+      react: {
+        version: '19.2',
+      },
+    },
+  },
   // Must be last: disables ESLint rules that conflict with Prettier formatting.
   prettierConfig,
   globalIgnores([
     '.next/**',
     '.agents/**',
+    // Nested agent worktrees carry their own checkout and config; tsconfig
+    // already excludes them.
+    '.kilo/**',
+    '.claude/**',
     'AppWeb-React/**',
     'doc/**',
     'docs/AppWeb-React/**',
