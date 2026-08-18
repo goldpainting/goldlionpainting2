@@ -1,4 +1,4 @@
-<!-- NEXT-AGENTS-MD-START -->
+<!-- BEGIN:nextjs-agent-rules -->
 
 # Next.js: ALWAYS read docs before coding
 
@@ -220,3 +220,19 @@ Before committing or opening a PR:
 - When code changes are made, summarize the files changed and the behavior affected.
 - Mention any checks that were run, and clearly state if a relevant check could not be completed.
 - Avoid promotional footers, unrelated links, or repeated boilerplate text.
+
+## Model Routing
+
+Plan expensive, execute cheap. For medium/large changes (several files, new behavior, architecture, DB/auth): do the analysis and a written implementation plan with the strongest available model (Opus-class), hand implementation to a cheaper model (Sonnet-class; Haiku-class for mechanical edits), then review the diff against the plan on the strong model. Plans for a cheaper executor must be self-contained: exact file paths, current-state code excerpts, this repo's check-gate commands as verification steps, an explicit out-of-scope list, and STOP conditions. Tiny one-file changes skip the split — plan/delegate overhead costs more than it saves.
+
+## Integrated Browser
+
+When a change affects visible UI, when debugging layout/hydration/console errors, or when the user asks, verify it in the agent's own integrated browser against the local dev server — `npm run dev`, default `http://localhost:3000` — instead of asking the user for screenshots. Integrated browser means the browser built into the agent's native app: Claude Code Browser pane (`mcp__Claude_Browser__*` tools), Codex app browser. NEVER use the Playwright MCP, chrome-devtools MCP, `playwright-cli`, or anything that opens an external Google Chrome window for this — those are only for explicit Playwright/E2E test requests. Reuse a running dev server; never start a second instance on another port without saying so. Skip for logic-only changes with no visual surface.
+
+## Installed Plugins / Extensions
+
+Use the tooling already installed instead of reinventing it or giving a generic answer. In Claude Code these are plugins (skills, agents, slash commands, MCP servers, hooks); in Codex they are complementos/extensiones. Before doing a task by hand, check whether an installed plugin/complemento already covers it — a dedicated MCP for a service, a domain skill, a review agent, a workflow command — and prefer the most specific installed tool. Do not install new ones or enable disabled ones on your own; only use what is installed, and if a clearly-relevant one is missing, say so and let the user decide.
+
+## Validation Timing
+
+Do NOT run `npm run check`, lint, typecheck, build, format, `npm audit`, or test suites after ordinary small edits — they are slow and block the next change. Make the edit and hand it back with a short summary; rely on the editor to surface type/lint errors while iterating. Run the check gate ONLY when the user says to ship / deploy / "mandar todo a producción", when the user explicitly asks to run it, or immediately before an authorized commit/push. The single exception: a change to build config, dependencies, migrations, or CI where a broken build is likely — then name the one command you want to run and why, and run only that. This overrides any softer per-change validation wording above.
