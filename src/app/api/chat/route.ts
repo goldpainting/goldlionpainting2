@@ -50,7 +50,6 @@ const serviceAppointmentToolSchema = z.object({
     .describe('Any extra customer notes or project details.'),
 });
 
-export const runtime = 'nodejs';
 export const maxDuration = 30;
 
 function getEasternDateParts(date: Date) {
