@@ -7,10 +7,19 @@ import { fileURLToPath } from "node:url";
 const projectRoot = path.dirname(fileURLToPath(import.meta.url));
 
 const config: NextConfig = {
+  cacheComponents: true,
+  partialPrefetching: false,
+  typedRoutes: true,
+  reactCompiler: true,
+  agentRules: false,
   turbopack: {
     root: projectRoot,
   },
   experimental: {
+    turbopackRustReactCompiler: true,
+    turbopackGc: true,
+    turbopackLazyDynamicImports: true,
+    agentUpgrade: "latest",
     // Next.js 16.3 turned `useTypeScriptCli` on by default, which makes
     // `next build` shell out to the `tsc` binary owned by the `typescript`
     // package. This project aliases `typescript` to
