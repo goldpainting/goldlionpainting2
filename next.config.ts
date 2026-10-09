@@ -8,7 +8,7 @@ const projectRoot = path.dirname(fileURLToPath(import.meta.url));
 
 const config: NextConfig = {
   cacheComponents: true,
-  partialPrefetching: false,
+  partialPrefetching: true,
   typedRoutes: true,
   reactCompiler: true,
   agentRules: false,
