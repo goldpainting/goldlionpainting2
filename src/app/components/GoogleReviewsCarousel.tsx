@@ -202,12 +202,6 @@ function PaginatedReviews({
   }, [onLoadedReviewCountChange, visibleReviews.length]);
 
   useEffect(() => {
-    if (page > pages.length) {
-      setPage(1);
-    }
-  }, [page, pages.length]);
-
-  useEffect(() => {
     if (!api) return;
 
     const updatePage = () => {
